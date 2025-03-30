@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+  <title>Selamat Hari Raya Idul Fitri</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to top, #1a1a1a, #444);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      transition: background 2s ease;
+    }
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: blink 2s infinite ease-in-out;
+      z-index: 2;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+      z-index: 2;
+    }
+    .envelope {
+      width: 400px;
+      height: 200px;
+      background: linear-gradient(145deg ,#f8e9a1,#fff7cc);
+      border: 2px solid #c2a227;
+      position: relative;
+      box-shadow: inset 0 0 8px #c2a227, 0 10px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.8s ease-in-out;
+      transform-style: preserve-3d;
+    }
+    .envelope-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background:linear-gradient(to bottom,#c2a227,#f8e9a1);
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      transform-origin: top;
+      transform: rotateX(0deg);
+      transition: transform 0.8s ease-in-out;
+      box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
+    }
+    .envelope::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.2),transparent);
+      pointer-events: none;
+      border-radius: 12px;
+    }
+    .envelope.open .envelope-top {
+      transform: rotateX(180deg);
+    }
+    .message {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.4em;
+      color: #c2a227;
+      opacity: 0;
+      text-align: center;
+      transition: opacity 0.5s ease-in-out 0.8s;
+    }
+    .envelope.open .message {
+      opacity: 1;
+    }
+    .css-lantern, .css-lantern-kanan {
+      position: absolute;
+      top: 50px;
+      width: 50px;
+      height: 80px;
+      background: #ffd700;
+      border: 3px solid #c2a227;
+      border-radius: 10px;
+      box-shadow: 0 0 20px gold;
+      animation: swing 3s ease-in-out infinite;
+    }
+    .css-lantern {
+      left: 50px;
+    }
+    .css-lantern-kanan {
+      right: 50px;
+    }
+    .css-lantern::before, .css-lantern-kanan::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 20px;
+      background: #444;
+      border-radius: 0 0 10px 10px;
+    }
+    .css-lantern::after, .css-lantern-kanan::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 10px;
+      background: #c2a227;
+      border-radius: 0 0 10px 10px;
+    }
+    .clouds {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .cloud {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 30px 10px 0 #fff, 60px 10px 0 #fff, 30px -10px 0 #fff;
+      opacity: 0.8;
+      animation: moveClouds 60s linear infinite;
+      z-index: 1;
+    }
+    @keyframes moveClouds {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(160vw); }
+    }
+    @keyframes swing {
+      0% { transform: rotate(0deg); }
+      50% { transform: rotate(5deg); }
+      100% { transform: rotate(0deg); }
+    }
+    .namasaya {
+      position: fixed;
+      bottom: 15px;
+      right: 20px;
+      color: #ffffff;
+      font-size: 16px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 6px 12px;
+      border-radius: 8px;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+
+    
+  <div class="stars">
+    <div class="star" style="top:10%; left:20%;"></div>
+    <div class="star" style="top:30%; left:70%;"></div>
+    <div class="star" style="top:50%; left:40%;"></div>
+  </div>
+  <div class="clouds" id="clouds"></div>
+  <div class="css-lantern"></div>
+  <div class="css-lantern-kanan"></div>
+  <div class="container">
+    <div id="envelope" class="envelope">
+      <div class="envelope-top"></div>
+      <div class="message">
+        <div><strong>"SELAMAT HARI RAYA IDUL FITRI"</strong></div>
+        <div><strong>MOHON MAAF LAHIR DAN BATIN</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="namasaya">By : rio</div>
+  <script>
+    document.getElementById('envelope').addEventListener('click', () => {
+      document.getElementById('envelope').classList.toggle('open');
+    });
+    const cloudsContainer = document.getElementById("clouds");
+    function generateClouds(jumlah = 7) {
+      for (let i = 0; i < jumlah; i++) {
+        const cloud = document.createElement("div");
+        cloud.classList.add("cloud");
+        const size = Math.floor(Math.random() * 50) + 50;
+        const top = Math.floor(Math.random() * 70) + 10;
+        const delay = Math.random() * 5;
+        const duration = Math.random() * 30 + 20;
+        cloud.style.width = `${size}px`;
+        cloud.style.height = `${size * 0.6}px`;
+        cloud.style.top = `${top}%`;
+        cloud.style.left = `-${size}px`;
+            cloud.style.animationDuration = `${duration}s`;
+            cloud.style.animationDelay = `${delay}s`;
+
+            cloudsContainer.appendChild(cloud);
+        }
+    }
+
+    generateClouds(7); // Bisa ubah jumlah awan di sini
+</script>
+
+<script>
+    const backgrounds = [
+        {
+            name: "Pagi",
+            gradient: "linear-gradient(to top, #fdd9b5, #87ceeb)", // jingga ke biru muda
+            cloudColor: "#fff",
+            cloudOpacity: 0.9
+        },
+        {
+            name: "Siang",
+            gradient: "linear-gradient(to top, #87ceeb, #ffffff)", // biru langit
+            cloudColor: "#fff",
+            cloudOpacity: 1
+        },
+        {
+            name: "Sore",
+            gradient: "linear-gradient(to top, #ffa07a, #fdd9b5)", // jingga sore
+            cloudColor: "#f5f5f5",
+            cloudOpacity: 0.8
+        },
+        {
+            name: "Malam",
+            gradient: "linear-gradient(to top, #0f0f1c, #1a1a2e)", // gelap malam
+            cloudColor: "#ccc",
+            cloudOpacity: 0.5
+        }
+    ];
+
+    let currentBackgroundIndex = 0;
+
+    function updateBackground() {
+        const body = document.body;
+        const config = backgrounds[currentBackgroundIndex];
+
+        body.style.background = config.gradient;
+
+        // Update awan
+        document.querySelectorAll('.cloud').forEach(cloud => {
+            cloud.style.background = config.cloudColor;
+            cloud.style.boxShadow = `30px 10px 0 ${config.cloudColor}, 60px 10px 0 ${config.cloudColor}, 30px -10px 0 ${config.cloudColor}`;
+            cloud.style.opacity = config.cloudOpacity;
+        });
+
+        // Glow lentera hanya saat malam
+        document.querySelectorAll('.css-lantern, .css-lantern-kanan, .side-lantern').forEach(lantern => {
+            lantern.style.boxShadow = (config.name === "Malam")
+                ? '0 0 30px gold, 0 0 60px gold'
+                : '0 0 20px gold';
+        });
+
+        // Lanjut ke latar berikutnya
+        currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
+    }
+
+    // Panggil pertama dan set interval
+    generateClouds(7);
+    updateBackground();
+    setInterval(updateBackground, 10000); // ganti tiap 10 detik
+</script>
+
+<script>
+    const starsContainer = document.getElementById("stars-container");
+  
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      star.classList.add("star");
+  
+      // Posisi acak di layar
+      star.style.top = Math.random() * 100 + "vh";
+      star.style.left = Math.random() * 100 + "vw";
+  
+      // Ukuran acak
+      const size = Math.random() * 2 + 1;
+      star.style.width = size + "px";
+      star.style.height = size + "px";
+  
+      // Animasi delay acak agar kedipannya beda-beda
+      star.style.animationDelay = Math.random() * 3 + "s";
+  
+      starsContainer.appendChild(star);
+    }
+  </script>
+
+  <script>
+  let inSecretZone = false;
+  let secretTimer;
+  
+  document.addEventListener('mousemove', (e) => {
+    const tolerance = 50; // ukuran zona rahasia (px)
+    const x = e.clientX;
+    const y = e.clientY;
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+  
+    // Cek apakah kursor berada di pojok kiri bawah
+    if (x < tolerance && y > windowHeight - tolerance) {
+      if (!inSecretZone) {
+        inSecretZone = true;
+        secretTimer = setTimeout(() => {
+          alert('Kamu menemukan zona rahasia!\nSelamat kamu mendapatkan 5k');
+          // Kamu bisa ganti efeknya dengan show gambar, efek glitch, dll.
+        }, 3000); // 3 detik diam di pojok
+      }
+    } else {
+      inSecretZone = false;
+      clearTimeout(secretTimer);
+    }
+  });
+  
+</script>
+</body>
+</html>
